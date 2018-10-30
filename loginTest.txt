@@ -1,0 +1,36 @@
+package login;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
+
+import login.SignIn;
+
+public class SignInTest {
+
+	@Test
+	public static void verifySignIn() throws Exception
+	{
+		//setting up the web driver path
+		System.setProperty("webdriver.chrome.driver","D:\\chromedriver.exe");
+		
+		//creating the object of web driver
+		WebDriver driver = new ChromeDriver();
+		
+		//entering the URL of web page as input for web driver object
+		driver.get("http://www.phptravels.net/login/");
+		
+		//managing the window property of webpage
+		driver.manage().window().maximize();
+		
+		SignIn sig= new SignIn(driver);
+		sig.putemail();
+		sig.verifyemail();
+		sig.verifypassword();
+		sig.verifyrememberme();
+		sig.verifyloginbutton();
+		sig.verifymessage();
+		Thread.sleep(1000);
+		driver.close();
+}
+}

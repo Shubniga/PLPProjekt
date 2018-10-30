@@ -1,0 +1,81 @@
+package login;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class SignIn {
+
+	private static WebDriver driver;
+	List<String> email = new ArrayList<String>();
+	List<String> pwd = new ArrayList<String>();
+	public String expected="Invalid Email or Password";
+
+	public void putemail()
+	{	
+		// Creating a list  
+		email.add("ajayRaaj789@gmail.com");  // adds 1 at 0 index 
+		email.add("nirajBhai456@gmail.com");  // adds 2 at 1 index 
+		System.out.println(email);  // [1, 2] 
+
+		// Creating another list  
+		pwd.add("789@Ajay"); 
+		pwd.add("456$Niraj"); 
+		//pwd.add(3); 
+		System.out.println(pwd);
+	}
+	public SignIn(WebDriver driver)
+	{
+		SignIn.driver =driver;
+	}
+
+	public void verifyemail() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='loginfrm']/div[1]/div[5]/div/div[1]/input")).sendKeys(email.get(0));
+		System.out.println("emailID located");
+	}
+
+	public void verifypassword() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='loginfrm']/div[1]/div[5]/div/div[2]/input")).sendKeys(pwd.get(0));
+		System.out.println("password located");
+	}
+
+	public void verifyrememberme() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		//driver.findElement(By.xpath("//*[@id='remember-me']")).click();
+		if ( !driver.findElement(By.id("remember-me")).isSelected() )
+		{
+			driver.findElement(By.id("remember-me")).click();
+		}
+		System.out.println("remember me located");
+	}
+
+	public void verifyloginbutton() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='loginfrm']/button")).click();
+		System.out.println("login button located");
+	}
+
+	public void verifymessage() throws InterruptedException
+	{
+		System.out.println("message located");
+		Thread.sleep(2000);
+		String actual = driver.findElement(By.xpath("//*[@id='loginfrm']/div[1]/div[2]/div")).getText();
+		if(actual.equals(expected))
+		{
+			System.out.println("Error message Verification - Passed");
+		}
+		else
+		{
+			System.out.println("Error message Verification - Failed");
+			driver.quit();
+		}
+	}
+}
